@@ -9,7 +9,12 @@ export type CurrentLocationCardProps = {
   low: number;
 };
 
-export function CurrentLocationCard({
+const formatTemperature = (temp: number | string): string | number => {
+  if (typeof temp === "string") return temp;
+  return Number(temp.toFixed(2));
+};
+
+export default function CurrentLocationCard({
   isCurrent,
   name,
   temp,
@@ -28,12 +33,14 @@ export function CurrentLocationCard({
         </div>
 
         <div className="text-xl font-medium text-black">{name}</div>
-        <div className="text-xl font-medium text-black">{temp}</div>
         <div className="text-xl font-medium text-black">
-          Feels like: {feelsLike}
+          {formatTemperature(temp)}
         </div>
         <div className="text-xl font-medium text-black">
-          H: {high} L: {low}
+          Feels like: {formatTemperature(feelsLike)}
+        </div>
+        <div className="text-xl font-medium text-black">
+          H: {formatTemperature(high)} L: {formatTemperature(low)}
         </div>
       </div>
     </>

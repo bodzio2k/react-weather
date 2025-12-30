@@ -1,6 +1,6 @@
 import "./App.css";
 import { useWeatherStore } from "./stores/weather.store";
-import { CurrentLocationCard } from "./components/CurrentLocationCard";
+import CurrentLocationCard from "./components/CurrentLocationCard";
 import { useEffect } from "react";
 
 function App() {
@@ -14,7 +14,8 @@ function App() {
 
   console.log("Creating app...");
 
-  const displayTemp = loading || temperature_2m === null ? "--" : temperature_2m;
+  const displayTemp =
+    loading || temperature_2m === null ? "--" : temperature_2m;
 
   return CurrentLocationCard({
     feelsLike: 1,
