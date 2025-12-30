@@ -1,34 +1,29 @@
-import { useState } from "react";
 import "./App.css";
-import "./services/WeatherService";
+import { useWeatherStore } from "./stores/weather.store";
+import { CurrentLocationCard } from "./components/CurrentLocationCard";
+import { useEffect } from "react";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const fetchWeather = useWeatherStore((s) => s.fetch);
+  const temperature_2m = useWeatherStore((s) => s.temperature_2m);
+  const loading = useWeatherStore((s) => s.loading);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+  useEffect(() => {
+    fetchWeather();
+  }, []);
+
+  console.log("Creating app...");
+
+  const displayTemp = loading || temperature_2m === null ? "--" : temperature_2m;
+
+  return CurrentLocationCard({
+    feelsLike: 1,
+    high: 2,
+    low: 3,
+    name: "Berlin",
+    temp: displayTemp,
+    isCurrent: false,
+  });
 }
 
 export default App;
